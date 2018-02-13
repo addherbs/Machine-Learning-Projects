@@ -10,6 +10,22 @@ import java.util.Scanner;
 
 public class DecisionTree {
 
+	private class TreeObject {
+
+        public int objectType;
+        double objectInformationGain;
+
+        public int objectID = 0;
+
+        public double objectAttribute;
+        public double objectThreshold;
+
+        public int objectLable;
+        public TreeObject objectLeftTree;
+        public TreeObject objectRightTree;
+        ArrayList<Double> objectClassProbabilityDistribution = new ArrayList<Double>();
+    }
+
     /*
     Main method calls the learning and classification phase.
      */
@@ -19,7 +35,7 @@ public class DecisionTree {
         InputStreamReader is = new InputStreamReader(System.in);
         BufferedReader newBuffer = new BufferedReader(is);
 
-        String ip = newBuffer.readLine();   //Reads unput
+        String ip = newBuffer.readLine();   //Reads input
         String[] inputText = ip.split("\\s+");  //splits
         String line;
         //String filename = inputText[0]; 
@@ -55,7 +71,7 @@ public class DecisionTree {
 
         }
 
-        DecisionTree obj = new DecisionTree();    //careats oobject of the class
+        DecisionTree obj = new DecisionTree();    //creates object of the class
 
         ArrayList<Double> currentAttributes = new ArrayList<Double>();
         for (int i = 0; i < 16; i++) {
@@ -215,7 +231,7 @@ public class DecisionTree {
     }
 
     /*
-    Calls the BFS from here whichc calls recursively to the samen node.
+    Calls the BFS from here which calls recursively to the same node.
      */
     public ArrayList<TreeObject> mainBFS(TreeObject node, int treeNumber) {
         int id = 1;
@@ -491,7 +507,7 @@ public class DecisionTree {
     }
 
     /*
-    This method checks if all the exmaples have the same class or not
+    This method checks if all the examples have the same class or not
     returns a boolean value, if true has same class else false
      */
     public boolean returnSameOrDiffClass(ArrayList<ArrayList<Double>> inputMatrix) {
@@ -500,7 +516,7 @@ public class DecisionTree {
         double classValue = inputMatrix.get(0).get(columnSize);
         for (int i = 0; i < inputMatrix.size(); i++) {
             if (inputMatrix.get(i).get(columnSize) != classValue) {
-                check = false;  //Atleast one is different
+                check = false;  //At least one is different
                 break;
             }
         }
@@ -541,7 +557,7 @@ public class DecisionTree {
 
             /*
             check for choice, if optimized then generates best attr and best threshold
-            otherwise sets the value to -1 as defiend earlier
+            otherwise sets the value to -1 as defined earlier
              */
             if (inputChoice.equals("optimized")) {
                 bestAttrbute_bestThreshold = chooseAttributeOptimized(inputMatrix, currentAttributes);
@@ -565,7 +581,7 @@ public class DecisionTree {
                     bestAttrbute_bestThreshold.get(0), bestAttrbute_bestThreshold.get(1));
 
             /*
-            If the examples are less than pruning thrershold then we generate probability distribubtion matrix
+            If the examples are less than pruning threshold then we generate probability distribution matrix
              */
             ArrayList<Double> inputProbabilityDistributionDefaultValue = null;
             if (leftTreeExamples.size() < inputPruningThreshold || rightTreeExamples.size() < inputPruningThreshold) {
@@ -586,7 +602,7 @@ public class DecisionTree {
     }
 
     /*
-    Generates an ArrayList of the datatype double which specifies the distribution of the data according to the respective class
+    Generates an ArrayList of the data type double which specifies the distribution of the data according to the respective class
      */
     public ArrayList<Double> GenerateProbabilityDistribution(ArrayList<ArrayList<Double>> currentMatrix) {
 
@@ -606,7 +622,7 @@ public class DecisionTree {
     }
 
     /*
-    This method generates the count of each classes and returns the arraylist
+    This method generates the count of each classes and returns the ArrayList
      */
     public int[] generateCountOfClasses(ArrayList<ArrayList<Double>> inputMatrix) {
         int classesCount[] = new int[10];
@@ -629,7 +645,7 @@ public class DecisionTree {
 
         if (!currentMatrix.isEmpty()) {
             ////System.out.println(currentMatrix.size());
-            //TODO Generalise the unique class label
+            //TODO Generalize the unique class label
             //ArrayList<Double> uniqueClasses = find_unique_class(currentMatrix);
 
             ////System.out.println(" uniqueClasses "+uniqueClasses);
@@ -651,20 +667,6 @@ public class DecisionTree {
         return entropy;
     }
 
-    private class TreeObject {
-
-        public int objectType;
-        double objectInformationGain;
-
-        public int objectID = 0;
-
-        public double objectAttribute;
-        public double objectThreshold;
-
-        public int objectLable;
-        public TreeObject objectLeftTree;
-        public TreeObject objectRightTree;
-        ArrayList<Double> objectClassProbabilityDistribution = new ArrayList<Double>();
-    }
+    
 
 }
